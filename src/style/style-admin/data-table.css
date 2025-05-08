@@ -41,6 +41,7 @@ body {
     color: var(--color-quaternary);
     font-weight: var(--font-weight-300);
     opacity: var(--ocpacity-50);
+    margin: 0;
 }
 
 .search .search__input {

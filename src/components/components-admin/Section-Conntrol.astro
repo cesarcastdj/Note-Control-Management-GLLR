@@ -1,20 +1,58 @@
 ---
 import "../../style/style-admin/data-table.css";
+import "../../style/style-admin/Matricula.css";
 ---
 
 <section class="data-content-section">
   <!-- Sección de búsqueda -->
   <section class="search-content-data">
     <div class="welcome-search-data">
-      <h2 class="welcome-search-data__title">Matriculación</h2>
+      <h2 class="welcome-search-data__title">Matrícula / Registro</h2>
       <p class="welcome-search-data__text">
         Aquí puedes gestionar los datos de los nuevos Ingresos
       </p>
     </div>
   </section>
 
-  <!-- Sección de tablas -->
+  <!-- Informacion de la matriculacion -->
   <section class="content-info-data">
+    <section class="data-general-control">
+      <div class="registro-control">
+        <h5 class="estudiantes-registrados">Estudiantes Registrados</h5>
+        <span>05</span>
+        <div class="btn-accion-control">
+          <!-- Botón para abrir el modal de agregar estudiantes -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#modalAgregar"
+          >
+            <i class="bx bxs-user-plus"></i> Agregar Estudiantes
+          </button>
+          <!-- Botón para abrir el modal de editar estudiantes -->
+          <button
+            type="button"
+            class="btn btn-warning"
+            data-bs-toggle="modal"
+            data-bs-target="#modalEditar"
+          >
+            <i class="bx bxs-edit-alt"></i> Editar Estudiantes
+          </button>
+        </div>
+      </div>
+
+      <div class="registro-control-flex">
+        <div class="registro-control">
+          <h5 class="estudiantes-registrados">Estudiantes Activos</h5>
+          <span>05</span>
+        </div>
+        <div class="registro-control">
+          <h5 class="estudiantes-registrados">Estudiantes Inactivos</h5>
+          <span>05</span>
+        </div>
+      </div>
+    </section>
     <!-- Primera tabla -->
     <section class="display-table">
       <div class="content-table1">
@@ -190,3 +228,218 @@ import "../../style/style-admin/data-table.css";
     </section>
   </section>
 </section>
+
+<!-- Modal para Agregar Estudiantes -->
+<div
+  class="modal fade"
+  id="modalAgregar"
+  tabindex="-1"
+  aria-labelledby="modalAgregarLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Registro de Estudiantes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <!-- 🔹 Información Personal -->
+          <div class="mb-3">
+            <label for="cedula" class="form-label"
+              >Cédula <span class="campo-obligatorio">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="cedula"
+              placeholder="Ingrese su cédula"
+              required
+            />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="primerNombre" class="form-label"
+                >Primer Nombre <span class="campo-obligatorio">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="primerNombre"
+                placeholder="Ingrese su primer nombre"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="segundoNombre" class="form-label"
+                >Segundo Nombre <span class="campo-obligatorio">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="segundoNombre"
+                placeholder="Ingrese su segundo nombre"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="primerApellido" class="form-label"
+                >Primer Apellido <span class="campo-obligatorio">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="primerApellido"
+                placeholder="Ingrese su primer apellido"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="segundoApellido" class="form-label"
+                >Segundo Apellido <span class="campo-obligatorio">*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="segundoApellido"
+                placeholder="Ingrese su segundo apellido"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="correo" class="form-label"
+              >Correo Electrónico <span class="campo-obligatorio">*</span
+              ></label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="correo"
+              placeholder="example@email.com"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="direccion" class="form-label"
+              >Dirección <span class="campo-obligatorio">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="direccion"
+              placeholder="Ingrese su dirección"
+              required
+            />
+          </div>
+
+          <div class="row">
+            <!-- Materias Asignadas -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Materias Asignadas</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="matematica"
+                />
+                <label class="form-check-label" for="matematica"
+                  >Matemática</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="literatura"
+                />
+                <label class="form-check-label" for="literatura"
+                  >Literatura</label
+                >
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="fisica" />
+                <label class="form-check-label" for="fisica">Física</label>
+              </div>
+            </div>
+
+            <!-- Cursos Asignados -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Cursos Asignados</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="html" />
+                <label class="form-check-label" for="html">Curso de HTML</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="javascript"
+                />
+                <label class="form-check-label" for="javascript"
+                  >Curso de JavaScript</label
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- 🔹 Sección (Filtrada por Materia/Curso) -->
+          <div class="mb-3">
+            <label for="seccion" class="form-label"
+              >Sección <span class="campo-obligatorio">*</span></label
+            >
+            <select class="form-select" id="seccion" required>
+              <option selected disabled>Seleccione una sección</option>
+              <option value="A">Sección A</option>
+              <option value="B">Sección B</option>
+              <option value="C">Sección C</option>
+            </select>
+          </div>
+
+          <!-- 🔹 Credenciales (Asignadas por el Admin) -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="usuario" class="form-label"
+                >Usuario <span class="campo-obligatorio">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="usuario"
+                placeholder="Asignado por el Admin"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="contrasena" class="form-label"
+                >Contraseña <span class="campo-obligatorio">*</span></label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="contrasena"
+                placeholder="Asignado por el Admin"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- 🔹 Botones -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="reset">Limpiar</button>
+            <button type="submit">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

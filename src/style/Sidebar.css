@@ -70,6 +70,7 @@
 .bar-home-content .list-bar ul {
     padding: 0;
     margin: 0;
+    display: block;
 }
 
 
@@ -96,11 +97,6 @@
     width: 100%;
 }
 
-.bar-home-content .list-bar li a>i {
-    margin-right: var(--spacing-12);
-    font-size: 1.3rem;
-}
-
 .bar-home-content .list-bar li a > i {
     margin-right: var(--spacing-12);
     font-size: 1.3rem;
@@ -108,8 +104,14 @@
 
 .list-bar .list-item {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+}
+
+.list-bar .list-item .joda {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .list-bar .list-item .bx-chevron-down {
@@ -119,14 +121,24 @@
 }
 
 .list-bar .list-item .sublist {
-    padding: var(--spacing-8) var(--spacing-16);
     color: var(--color-tertiary);
     font-size: var(--font-size-medium-12);
     border-radius: var(--border-radius-16);
-    margin-bottom: 0.5rem;
-    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    max-height: 0;
+    transition: 0.3s ease-out;
+}
+
+/* .list-bar .list-item__sub:hover .sublist {
+    padding: var(--spacing-8) var(--spacing-12);
+    max-height: 500px;
+    opacity: 1;
+} */
+
+.list-bar .list-item__sub:focus-within .sublist {
+    padding: var(--spacing-8) var(--spacing-16);
+    max-height: 500px;
+    opacity: 1;
 }
 
 .list-bar .list-item .sublist .sublist-item {
@@ -135,7 +147,7 @@
 }
 
 .list-bar .list-item .sublist .sublist-item:focus {
-    display: none;
+    /* display: none; */
     transition: 0.3s ease-out;
 }
 
@@ -184,5 +196,5 @@
 .bar-home-content .list-bar .list-item.expanded .sublist {
     display: block;
     /* Muestra las sublistas cuando el padre tiene la clase "expanded" */
-    max-height: 500px; /* Ajustar según el contenido */
+    max-height: 500px;
 }

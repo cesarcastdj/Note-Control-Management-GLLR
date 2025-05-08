@@ -1,15 +1,16 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "src/**/*"],
-  "exclude": ["dist", "src/js"],
+  "include": ["src/ts/**/*.ts"],
+  "exclude": ["dist", "src/layouts", "src/components", "src/types"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
-    "rootDir": "src",
-    "outDir": "src/js",
-    "baseUrl": "./",
+    "rootDir": "./src/ts",
+    "outDir": "./src/js",
+    "baseUrl": "./src",
+    "noEmit": false,
     "paths": {
       "@components/*": ["src/components/*"],
       "@types/*": ["src/Types/*"]

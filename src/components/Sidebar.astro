@@ -1,65 +1,185 @@
 ---
+// Sidebar.astro
 import "../style/sidebar.css";
+
+// Obtenemos la ruta actual desde Astro
+const currentPath: string = Astro.url.pathname;
+
+// Definimos la interfaz y estructura del menú
+interface MenuItem {
+  label: string;
+  icon: string;
+  href: string;
+  subitems?: MenuItem[];
+}
+
+const sidebarMenu: MenuItem[] = [
+  {
+    label: "Página Principal",
+    icon: "bx bxs-home",
+    href: "/Admin-Control/Admin-home",
+  },
+  {
+    label: "Matrícula",
+    icon: "bx bx-pie-chart-alt-2",
+    href: "#",
+    subitems: [
+      {
+        label: "Registro",
+        icon: "bx bxs-folder",
+        href: "/Admin-Control/Matricula",
+      },
+      {
+        label: "Descargar Matrícula",
+        icon: "bx bxs-folder",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "Cursos",
+    icon: "bx bxl-medium",
+    href: "#",
+    subitems: [
+      {
+        label: "Materias",
+        icon: "bx bxs-folder",
+        href: "/materias/actividad",
+      },
+      {
+        label: "Actividades",
+        icon: "bx bxs-folder",
+        href: "/materias/actividad",
+      },
+    ],
+  },
+  {
+    label: "Notas",
+    icon: "bx bxs-calculator",
+    href: "#", //  no tiene URL válida
+    subitems: [
+      {
+        label: "Ponderación",
+        icon: "bx bxs-folder",
+        href: "/ponderacion/notas",
+      },
+      {
+        label: "Descargar Notas",
+        icon: "bx bxs-folder",
+        href: "/ponderacion/notas",
+      },
+    ],
+  },
+  {
+    label: "Papelera",
+    icon: "bx bx-trash",
+    href: "/papelera",
+  },
+];
+
+// Función simple para determinar si un enlace debe estar "activo"
+function isActive(link: string): boolean {
+  return currentPath === link;
+}
 ---
 
 <section class="bar-home-content">
   <div class="section-bar-area-content">
     <div class="section-bar-menu">
       <div class="btn-buttuon-agreagar">
-        <button><i class="bx bxs-user-plus"></i>Nuevo</button>
+        <button>
+          <i class="bx bxs-user-plus"></i>Nuevo
+        </button>
       </div>
 
       <div class="list-bar">
         <ul>
-          <li class="list-item active">
-            <a href="/Admin-Control/Admin-home">
-              <i class="bx bxs-home"></i>
-              <span>Página Principal</span>
-            </a>
-          </li>
-          <li class="list-item">
-            <a href="/Admin-Control/Matricula">
-              <i class="bx bx-pie-chart-alt-2"></i>
-              <span>Matrícula</span>
-            </a>
-          </li>
-          <li class="list-item">
-            <a href="#">
-              <i class="bx bxl-medium"></i>
-              <span>Materias</span>
-            </a>
-            <i class="bx bx-chevron-down"></i>
-            <ul class="sublist collapse">
-              <li class="sublist-item">
-                <a href="#">
-                  <span>Actividad</span>
-                </a>
-              </li>
-            </ul>
-          </li>
+          {
+            /*
+            Renderizamos los tres primeros elementos en la primera lista.
+            Se aplica la clase "active" si el href coincide con currentPath o si
+            alguno de sus subitems es activo.
+          */
+          }
+          {
+            sidebarMenu.slice(0, 3).map((item) => {
+              const itemActive =
+                isActive(item.href) ||
+                (item.subitems &&
+                  item.subitems.some((sub) => isActive(sub.href)));
+              return (
+                <li
+                  class={
+                    item.subitems
+                      ? `list-item list-item__sub ${itemActive ? "active" : ""}`
+                      : `list-item ${itemActive ? "active" : ""}`
+                  }
+                >
+                  <a href={item.href}>
+                    <i class={item.icon} />
+                    <span>{item.label}</span>
+                  </a>
+                  {item.subitems && (
+                    <ul class="sublist">
+                      {item.subitems.map((sub) => (
+                        <li
+                          class={`sublist-item ${isActive(sub.href) ? "active" : ""}`}
+                        >
+                          <a href={sub.href} tabindex="0">
+                            <i class={sub.icon} />
+                            <span>{sub.label}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })
+          }
         </ul>
         <ul>
-          <li class="list-item">
-            <a href="#">
-              <i class="bx bxs-calculator"></i>
-              <span>Ponderación</span>
-            </a>
-            <i class="bx bx-chevron-down"></i>
-            <ul class="sublist collapse">
-              <li class="sublist-item">
-                <a href="#">
-                  <i class="bx bxs-folder"></i>
-                  <span>Notas</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="list-item">
-            <a href="#">
-              <i class="bx bx-trash"></i>
-              <span>Papelera</span>
-            </a>
-          </li>
+          {
+            /*
+            Renderizamos los elementos restantes en la segunda lista.
+          */
+          }
+          {
+            sidebarMenu.slice(3).map((item) => {
+              const itemActive =
+                isActive(item.href) ||
+                (item.subitems &&
+                  item.subitems.some((sub) => isActive(sub.href)));
+              return (
+                <li
+                  class={
+                    item.subitems
+                      ? `list-item list-item__sub ${itemActive ? "active" : ""}`
+                      : `list-item ${itemActive ? "active" : ""}`
+                  }
+                >
+                  <a href={item.href}>
+                    <i class={item.icon} />
+                    <span>{item.label}</span>
+                  </a>
+                  {item.subitems && (
+                    <ul class="sublist">
+                      {item.subitems.map((sub) => (
+                        <li
+                          class={`sublist-item ${isActive(sub.href) ? "active" : ""}`}
+                        >
+                          <a href={sub.href} tabindex="0">
+                            <i class={sub.icon} />
+                            <span>{sub.label}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })
+          }
         </ul>
       </div>
     </div>

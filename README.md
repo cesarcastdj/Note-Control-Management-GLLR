@@ -17,6 +17,12 @@ npm install
 
 - Npm run dev
 
+## Inicializar TypeScript
+
+tsc
+
+tsc --watch
+
 Control + C: para detener el servidor local
 
 | Command                   | Action                                           |
