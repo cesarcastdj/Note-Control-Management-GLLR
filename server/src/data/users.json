@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "admin@gllr.com",
+            "password": "$2a$10$FlBJRQNaOUe68gQJbq6Os.uOMm82VCDHwusX28d2x9N3HpMtXyEwC",
+            "firstName": "Admin",
+            "lastName": "GLLR",
+            "role": "admin",
+            "active": true
+        },
+        {
+            "id": 2,
+            "email": "student@gllr.com",
+            "password": "$2a$10$gZnWtuo8SgodSc533RJuP.JH7yFKZFLewVIDX1I9A5RG/BGTZMuUm",
+            "firstName": "Estudiante",
+            "lastName": "GLLR",
+            "role": "student",
+            "active": true
+        }
+    ]
+}

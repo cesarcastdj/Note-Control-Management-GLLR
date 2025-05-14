@@ -4,18 +4,12 @@ import "../style/welcome.css";
 ---
 
 <section class="welcome-contents">
-  <img
-    src="/public/SVG/EllipseFigma.svg"
-    class="welcome-elipce-1 welcome-elipce"
-  />
-  <img
-    src="/public/SVG/EllipseFigma.svg"
-    class="welcome-elipce-2 welcome-elipce"
-  />
+  <img src="/SVG/EllipseFigma.svg" class="welcome-elipce-1 welcome-elipce" />
+  <img src="/SVG/EllipseFigma.svg" class="welcome-elipce-2 welcome-elipce" />
   <div class="welcome-content-info">
     <div class="welcome-content-title">
       <div class="welcome-logo">
-        <img src="/public/SVG/Logo-1.svg" />
+        <img src="/SVG/Logo-1.svg" />
       </div>
       <h1 class="welcome-title">
         Bienvenidos Al Sistema Que Gestiona Tus Notas
@@ -51,7 +45,7 @@ import "../style/welcome.css";
     </div>
 
     <div class="welcome-content-image">
-      <img src=" /public/img/Desktop-Inicio.jpg" class="welcome-image" />
+      <img src="/img/Desktop-Inicio.jpg" class="welcome-image" />
     </div>
   </div>
 </section>
@@ -67,20 +61,19 @@ import "../style/welcome.css";
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <img class="ellipse-login" src="/public/SVG/EllipseFigma.svg" />
+      <img class="ellipse-login" src="/SVG/EllipseFigma.svg" />
       <div class="modal-body">
-        <!-- Formulario de inicio de sesión -->
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Cerrar"></button>
-        <img class="logo-login" src="/public/SVG/Logo-1.svg" />
+        <img class="logo-login" src="/SVG/Logo-1.svg" />
         <h5 class="modal-title" id="loginModalLabel">Bienvenido De Nuevo 👋</h5>
         <p class="login-modal-p">
           Inicia sesión para empezar la revisión de tus notas.
         </p>
-        <form>
+        <form id="loginForm">
           <div class="mb-3">
             <label for="email" class="form-label">Correo Electrónico</label>
             <input
@@ -109,3 +102,5 @@ import "../style/welcome.css";
     </div>
   </div>
 </div>
+
+<script src="../scripts/login.js"></script>
