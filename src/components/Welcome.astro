@@ -3,6 +3,24 @@
 import "../style/welcome.css";
 ---
 
+<!-- BoxIcons CDN -->
+<link
+  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+
+<!-- Loader -->
+<div class="loader-container">
+  <div class="loader">
+    <img src="/SVG/Logo-1.svg" alt="GLLR Logo" class="loader-logo" />
+    <div class="loader-message">Cargando recursos...</div>
+    <div class="loader-status"></div>
+    <div class="loader-progress">
+      <div class="loader-progress-bar"></div>
+    </div>
+  </div>
+</div>
+
 <section class="welcome-contents">
   <img src="/SVG/EllipseFigma.svg" class="welcome-elipce-1 welcome-elipce" />
   <img src="/SVG/EllipseFigma.svg" class="welcome-elipce-2 welcome-elipce" />
@@ -73,30 +91,47 @@ import "../style/welcome.css";
         <p class="login-modal-p">
           Inicia sesión para empezar la revisión de tus notas.
         </p>
-        <form id="loginForm">
+        <form id="loginForm" autocomplete="off">
           <div class="mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
+            <label for="email" class="form-label">Usuario</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               id="email"
+              name="email"
               placeholder="Example_User55"
-              required
+              autocomplete="new-email"
+              autocapitalize="off"
             />
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Al menos 8 caracteres"
-              required
-            />
+            <div class="password-field">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Al menos 8 caracteres"
+                autocomplete="new-password"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                aria-label="Mostrar contraseña"
+              >
+                <i class="bx bx-hide"></i>
+              </button>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary w-100">
             Iniciar Sesión
           </button>
+          <div class="error-login">
+            <i class="bx bx-alert-triangle"></i>
+            <span id="error-login-message">Correo o contraseña incorrectos</span
+            >
+          </div>
         </form>
       </div>
     </div>
@@ -104,3 +139,137 @@ import "../style/welcome.css";
 </div>
 
 <script src="../scripts/login.js"></script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const loaderContainer = document.querySelector(".loader-container");
+    const welcomeContent = document.querySelector(".welcome-contents");
+    const messageElement = document.querySelector(".loader-message");
+    const statusElement = document.querySelector(".loader-status");
+    const progressBar = document.querySelector(".loader-progress-bar");
+    let progress = 0;
+    let loadStartTime = Date.now();
+    let resourcesLoaded = false;
+
+    if (
+      loaderContainer &&
+      welcomeContent &&
+      messageElement &&
+      progressBar &&
+      statusElement
+    ) {
+      welcomeContent.style.opacity = "0";
+
+      // Función para mostrar estado de conexión
+      const showConnectionStatus = () => {
+        if ("connection" in navigator && navigator.connection) {
+          const connection = navigator.connection;
+          if (connection.downlink < 1) {
+            statusElement.textContent = "Conexión lenta detectada";
+            statusElement.classList.add("warning");
+          } else if (connection.downlink < 2) {
+            statusElement.textContent = "Conexión estable";
+            statusElement.classList.add("info");
+          }
+        }
+      };
+
+      // Función para actualizar el progreso suavemente
+      const updateProgress = (targetProgress) => {
+        const increment = 1;
+        const interval = setInterval(() => {
+          if (progress < targetProgress) {
+            progress += increment;
+            progressBar.style.width = `${progress}%`;
+          } else {
+            clearInterval(interval);
+            if (progress >= 100 && resourcesLoaded) {
+              completeLoading();
+            }
+          }
+        }, 20);
+      };
+
+      // Función para completar la carga
+      const completeLoading = () => {
+        messageElement.textContent = "¡Bienvenido a GLLR!";
+        setTimeout(() => {
+          loaderContainer.style.opacity = "0";
+          welcomeContent.style.opacity = "1";
+          setTimeout(() => {
+            loaderContainer.style.display = "none";
+          }, 500);
+        }, 800);
+      };
+
+      // Verificar estado de conexión
+      showConnectionStatus();
+
+      // Monitorear progreso de carga
+      const resources = Array.from(
+        document.querySelectorAll('img, link[rel="stylesheet"], script'),
+      );
+      let loadedResources = 0;
+
+      resources.forEach((resource) => {
+        if (resource.complete) {
+          loadedResources++;
+        } else {
+          resource.addEventListener("load", () => {
+            loadedResources++;
+            const percentLoaded = (loadedResources / resources.length) * 100;
+            updateProgress(Math.max(percentLoaded, progress));
+          });
+        }
+      });
+
+      // Eventos de carga
+      document.onreadystatechange = () => {
+        if (document.readyState === "interactive") {
+          updateProgress(Math.max(60, progress));
+        }
+      };
+
+      // Cuando todo esté cargado
+      window.addEventListener("load", () => {
+        resourcesLoaded = true;
+        const loadTime = Date.now() - loadStartTime;
+
+        if (loadTime > 5000) {
+          // Si tarda más de 5 segundos
+          statusElement.textContent =
+            "La carga está tomando más tiempo de lo esperado";
+          statusElement.classList.add("warning");
+        }
+
+        updateProgress(100);
+      });
+    }
+
+    // Funcionalidad para el campo de contraseña
+    const passwordInput = document.querySelector("#password");
+    const togglePassword = document.querySelector(".toggle-password");
+
+    if (passwordInput && togglePassword) {
+      // Mostrar/ocultar contraseña con el botón
+      togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        togglePassword.querySelector("i").className =
+          `bx ${type === "password" ? "bx-hide" : "bx-show"}`;
+      });
+
+      // Asegurar que la contraseña esté oculta al perder el foco
+      passwordInput.addEventListener("blur", () => {
+        passwordInput.type = "password";
+        togglePassword.querySelector("i").className = "bx bx-hide";
+      });
+    }
+  });
+</script>
+
+<style>
+  .password-field {
+    position: relative;
+  }
+</style>

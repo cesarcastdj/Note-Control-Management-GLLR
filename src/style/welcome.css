@@ -2,6 +2,88 @@
 @import './variables.css';
 @import './global.css';
 
+/* Loader Styles */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--theme-dark);
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.loader-logo {
+    width: 180px;
+    height: auto;
+    animation: pulse 2s infinite;
+}
+
+.loader-message {
+    color: var(--color-tertiary);
+    font-size: var(--font-size-medium);
+    text-align: center;
+    min-height: 24px;
+    margin-top: 1rem;
+    opacity: 0.8;
+}
+
+.loader-progress {
+    width: 280px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-top: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loader-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 0 20px var(--color-primary);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes typing {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 body {
     background: var(--theme-dark);
     color: var(--color-tertiary);
@@ -16,6 +98,7 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
+    transition: opacity 0.5s ease-out;
 }
 
 .welcome-elipce {
@@ -144,7 +227,7 @@ body {
 .modal-content {
     border-radius: var(--border-radius-24);
     box-shadow: var(--box-shadow-button2);
-    background: rgba(255, 255, 255, 0.663);
+    background: #ffffff;
     border: none;
     color: var(--color-quaternary);
     position: relative;
@@ -171,15 +254,15 @@ body {
 
 .modal-dialog .btn-close {
     position: absolute;
-        top: 1rem;
-        right: 1rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        /* border: none; */
-        color: var(--color-quaternary);
-        font-size: 0.8rem;
-        cursor: pointer;
-        transition: color 0.3s ease, transform 0.2s ease;
+    top: 1rem;
+    right: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    /* border: none; */
+    color: var(--color-quaternary);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .modal-dialog .btn-close:hover {
@@ -235,6 +318,7 @@ body {
     padding: 0.8rem 1rem;
     border-radius: var(--border-radius-12);
     border: none;
+    outline: none;
     color: var(--color-primary);
     font-size: var(--font-size--12);
     font-weight: var(--font-weight-300);
@@ -272,16 +356,37 @@ body {
 
 /* Estilos mejorados para el botón con efecto de luz neón */
 .modal-body form button {
-  padding: 10px 20px;
-  color: var(--color-tertiary);
-  background: var(--color-secondary);
-  border: none;
-  border-radius: var(--border-radius-12);
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  transition:  0.3s ease;
-  font-weight: var(--font-weight-300);
+    padding: 10px 20px;
+    color: var(--color-tertiary);
+    background: var(--color-secondary);
+    border: none;
+    border-radius: var(--border-radius-12);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.3s ease;
+    font-weight: var(--font-weight-300);
+}
+
+.modal-body form .error-login {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    color: var(--color-danger);
+}
+
+.modal-body form .error-login i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-danger);
+}
+
+.modal-body form .error-login #error-login-message {
+    font-size: var(--font-size-medium-12);
+    text-align: center;
+    color: var(--color-danger);
 }
 
 .modal-body form button:hover {
@@ -298,62 +403,155 @@ body {
     background: var(--color-secondary);
 }
 
+.loader-error {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: var(--color-danger);
+}
+
+.loader-error i {
+    font-size: 2rem;
+}
+
+.loader-error .error-text {
+    text-align: center;
+    font-size: var(--font-size-medium);
+    max-width: 280px;
+    line-height: 1.4;
+}
+
+.loader-error .retry-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius-12);
+    background: var(--color-danger);
+    color: var(--color-tertiary);
+    font-size: var(--font-size-medium-12);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.loader-error .retry-button:hover {
+    background: var(--color-tertiary);
+    color: var(--color-danger);
+    box-shadow: 0 0 15px rgba(var(--color-danger-rgb), 0.3);
+}
 
 /* Diseño Responsivo */
 
 @media (max-width: 768px) {
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
-    font-size: 30px;
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
+        font-size: 30px;
+    }
 
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
+        font-size: var(--font-size-medium-12);
+    }
 
-  .welcome-contents .welcome-content-info .welcome-login {
-    width: 80%;
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-login {
+        width: 80%;
+        font-size: var(--font-size-medium-12);
+    }
 }
+
 @media (max-width: 576px) {
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
-    font-size: 25px;
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
+        font-size: 25px;
+    }
 
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
+        font-size: var(--font-size-medium-12);
+    }
 
-  .welcome-contents .welcome-content-info .welcome-login {
-    width: 90%;
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-login {
+        width: 90%;
+        font-size: var(--font-size-medium-12);
+    }
 }
+
 @media (max-width: 400px) {
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
-    font-size: 20px;
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
+        font-size: 20px;
+    }
 
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
+        font-size: var(--font-size-medium-12);
+    }
 
-  .welcome-contents .welcome-content-info .welcome-login {
-    width: 100%;
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-login {
+        width: 100%;
+        font-size: var(--font-size-medium-12);
+    }
 }
+
 @media (max-width: 320px) {
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
-    font-size: 18px;
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-title {
+        font-size: 18px;
+    }
 
-  .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
-    font-size: var(--font-size-medium-12);
-  }
+    .welcome-contents .welcome-content-info .welcome-content-title .welcome-content-sub-paragraph {
+        font-size: var(--font-size-medium-12);
+    }
 
-  .welcome-contents .welcome-content-info .welcome-login {
-    width: 100%;
+    .welcome-contents .welcome-content-info .welcome-login {
+        width: 100%;
+        font-size: var(--font-size-medium-12);
+    }
+}
+
+.loader-status {
     font-size: var(--font-size-medium-12);
-  }
+    text-align: center;
+    margin-top: 0.5rem;
+    min-height: 20px;
+    transition: all 0.3s ease;
+}
+
+.loader-status.warning {
+    color: #FFA500;
+}
+
+.loader-status.info {
+    color: var(--color-primary);
+}
+
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field .form-control {
+    padding-right: 2.5rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-quaternary);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+.toggle-password i {
+    font-size: 1.2rem;
+    display: flex;
+}
+
+.toggle-password:focus {
+    outline: none;
 }
