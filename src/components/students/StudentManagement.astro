@@ -1,0 +1,430 @@
+import LoadingSpinner from '../common/LoadingSpinner.astro';
+import Pagination from '../common/Pagination.astro';
+import Toast from '../common/Toast.astro';
+
+export interface Props {
+    userRole: 'admin' | 'teacher';
+}
+
+const userRole = Astro.props.userRole as 'admin' | 'teacher';
+
+<div class="student-management">
+    <div class="student-header">
+        <h2 class="student-title">Gestión de Estudiantes</h2>
+        
+        <div class="student-actions">
+            <button class="btn-primary" id="importStudents">
+                <i class="bx bx-upload"></i>
+                Importar Lista
+            </button>
+            
+            <button class="btn-primary" id="addStudent">
+                <i class="bx bx-plus"></i>
+                Nuevo Estudiante
+            </button>
+        </div>
+    </div>
+
+    <div class="student-content">
+        <div class="student-filters">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="studentSearch"
+                    placeholder="Buscar por nombre o cédula..."
+                    class="search-input"
+                />
+                <i class="bx bx-search"></i>
+            </div>
+
+            <div class="filter-actions">
+                <select id="sectionFilter" class="select-control">
+                    <option value="">Todas las secciones</option>
+                </select>
+
+                <select id="statusFilter" class="select-control">
+                    <option value="">Todos los estados</option>
+                    <option value="active">Activos</option>
+                    <option value="inactive">Inactivos</option>
+                    <option value="pending">Pendientes</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="student-table-container">
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cédula</th>
+                        <th>Sección</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                    <!-- Se poblará dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="student-pagination">
+            <Pagination currentPage={1} totalPages={1} />
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar estudiante -->
+    <div class="modal" id="studentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Nuevo Estudiante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="studentForm">
+                        <div class="form-group">
+                            <label for="studentName">Nombre completo</label>
+                            <input type="text" id="studentName" name="name" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="studentCedula">Cédula</label>
+                            <input type="text" id="studentCedula" name="cedula" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="studentEmail">Email</label>
+                            <input type="email" id="studentEmail" name="email" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="studentSection">Sección</label>
+                            <select id="studentSection" name="section" required class="form-control">
+                                <!-- Se poblará dinámicamente -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="studentStatus">Estado</label>
+                            <select id="studentStatus" name="status" required class="form-control">
+                                <option value="active">Activo</option>
+                                <option value="inactive">Inactivo</option>
+                                <option value="pending">Pendiente</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn-primary" id="saveStudent">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para importar estudiantes -->
+    <div class="modal" id="importModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Importar Estudiantes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="importForm">
+                        <div class="form-group">
+                            <label for="importFile">Archivo Excel</label>
+                            <input
+                                type="file"
+                                id="importFile"
+                                accept=".xlsx,.xls"
+                                required
+                                class="form-control"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="importSection">Sección</label>
+                            <select id="importSection" required class="form-control">
+                                <!-- Se poblará dinámicamente -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn-primary" id="startImport">
+                        Importar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .student-management {
+        padding: var(--spacing-20);
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-16);
+    }
+
+    .student-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-24);
+    }
+
+    .student-title {
+        font-size: var(--font-size-xlarge);
+        color: var(--color-text-primary);
+    }
+
+    .student-actions {
+        display: flex;
+        gap: var(--spacing-12);
+    }
+
+    .btn-primary {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-8);
+        padding: var(--spacing-8) var(--spacing-16);
+        background: var(--color-primary);
+        color: var(--color-text-light);
+        border: none;
+        border-radius: var(--border-radius-8);
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: var(--color-primary-dark);
+    }
+
+    .student-filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-20);
+    }
+
+    .search-box {
+        position: relative;
+        width: 300px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: var(--spacing-8) var(--spacing-16);
+        padding-left: var(--spacing-32);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-8);
+        background: var(--color-background);
+    }
+
+    .search-box i {
+        position: absolute;
+        left: var(--spacing-12);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-text-secondary);
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: var(--spacing-12);
+    }
+
+    .select-control {
+        padding: var(--spacing-8) var(--spacing-16);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-8);
+        background: var(--color-background);
+        min-width: 200px;
+    }
+
+    .student-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: var(--spacing-20);
+    }
+
+    .student-table th,
+    .student-table td {
+        padding: var(--spacing-12) var(--spacing-16);
+        text-align: left;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .student-table th {
+        font-weight: 600;
+        background: var(--color-background);
+        color: var(--color-text-primary);
+    }
+
+    .student-table tbody tr:hover {
+        background: var(--color-background);
+    }
+
+    .student-pagination {
+        display: flex;
+        justify-content: center;
+    }
+
+    .modal {
+        display: none;
+    }
+
+    .modal.show {
+        display: block;
+    }
+
+    .modal-dialog {
+        max-width: 500px;
+        margin: var(--spacing-32) auto;
+    }
+
+    .modal-content {
+        background: var(--color-background);
+        border-radius: var(--border-radius-16);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: var(--spacing-20);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-12);
+    }
+
+    .form-group {
+        margin-bottom: var(--spacing-16);
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: var(--spacing-8);
+        color: var(--color-text-primary);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: var(--spacing-8) var(--spacing-16);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-8);
+        background: var(--color-background);
+    }
+
+    @media (max-width: 768px) {
+        .student-header,
+        .student-filters {
+            flex-direction: column;
+            gap: var(--spacing-16);
+        }
+
+        .search-box,
+        .filter-actions {
+            width: 100%;
+        }
+
+        .select-control {
+            flex: 1;
+        }
+    }
+</style>
+
+<script>
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeStudentManagement();
+    });
+
+    function initializeStudentManagement() {
+        // Botones principales
+        const addButton = document.getElementById('addStudent');
+        const importButton = document.getElementById('importStudents');
+        
+        // Modales
+        const studentModal = document.getElementById('studentModal');
+        const importModal = document.getElementById('importModal');
+        
+        // Event Listeners
+        addButton?.addEventListener('click', () => showModal(studentModal));
+        importButton?.addEventListener('click', () => showModal(importModal));
+        
+        // Cerrar modales
+        document.querySelectorAll('.btn-close, .btn-secondary').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const modal = (e.target as HTMLElement).closest('.modal') as HTMLElement;
+                if (modal) hideModal(modal);
+            });
+        });
+        
+        // Inicializar búsqueda y filtros
+        initializeSearch();
+        initializeFilters();
+    }
+
+    function showModal(modal: HTMLElement | null) {
+        if (modal) {
+            modal.classList.add('show');
+        }
+    }
+
+    function hideModal(modal: HTMLElement) {
+        modal.classList.remove('show');
+    }
+
+    function initializeSearch() {
+        const searchInput = document.getElementById('studentSearch') as HTMLInputElement;
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce(() => {
+                // Implementar lógica de búsqueda
+                console.log('Searching:', searchInput.value);
+            }, 300));
+        }
+    }
+
+    function initializeFilters() {
+        const sectionFilter = document.getElementById('sectionFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        
+        [sectionFilter, statusFilter].forEach(filter => {
+            filter?.addEventListener('change', () => {
+                // Implementar lógica de filtrado
+                console.log('Filter changed');
+            });
+        });
+    }
+
+    function debounce(func: Function, wait: number) {
+        let timeout: ReturnType<typeof setTimeout>;
+        return function executedFunction(...args: any[]) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+</script> 

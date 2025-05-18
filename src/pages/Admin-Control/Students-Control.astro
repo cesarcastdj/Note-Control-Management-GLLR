@@ -1,0 +1,345 @@
+---
+import AdminDashboard from "../../layouts/Admin/AdminDashboard.astro";
+import Sidebar from "../../components/Sidebar.astro";
+import NavigationBar from "../../components/NavigationBar.astro";
+import MatriculaForm from "../../components/components-admin/MatriculaForm.astro";
+import "../../style/style-admin/estudiantes.css";
+---
+
+<AdminDashboard title="Control de Estudiantes">
+    <NavigationBar />
+    <div class="Layout-grid-area">
+        <div class="Layout-grid-area--sidebar">
+            <Sidebar />
+        </div>
+        <div class="Layout-grid-area--content">
+            <!-- Panel de Control Principal -->
+            <section class="estudiantes-dashboard">
+                <div class="dashboard-header">
+                    <h2>Control de Estudiantes</h2>
+                    <p>Gestión completa de estudiantes y matrículas</p>
+                </div>
+
+                <!-- Estadísticas Rápidas -->
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <i class="bx bxs-graduation"></i>
+                        <div class="stat-info">
+                            <h3>Total Estudiantes</h3>
+                            <span>150</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="bx bxs-user-check"></i>
+                        <div class="stat-info">
+                            <h3>Activos</h3>
+                            <span>120</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="bx bxs-user-x"></i>
+                        <div class="stat-info">
+                            <h3>Inactivos</h3>
+                            <span>30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs de Navegación -->
+                <div class="nav-tabs-container">
+                    <ul class="nav nav-tabs" id="estudiantesTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button
+                                class="nav-link active"
+                                id="lista-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#lista"
+                                type="button"
+                                role="tab"
+                                aria-controls="lista"
+                                aria-selected="true"
+                            >
+                                <i class="bx bx-list-ul"></i>
+                                Lista de Estudiantes
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button
+                                class="nav-link"
+                                id="matricula-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#matricula"
+                                type="button"
+                                role="tab"
+                                aria-controls="matricula"
+                                aria-selected="false"
+                            >
+                                <i class="bx bx-user-plus"></i>
+                                Matrícula
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Contenido de los Tabs -->
+                    <div class="tab-content" id="estudiantesTabContent">
+                        <!-- Tab Lista de Estudiantes -->
+                        <div
+                            class="tab-pane fade show active"
+                            id="lista"
+                            role="tabpanel"
+                            aria-labelledby="lista-tab"
+                        >
+                            <div class="lista-estudiantes-container">
+                                <!-- Barra de Herramientas -->
+                                <div class="toolbar">
+                                    <div class="search-box">
+                                        <input
+                                            type="text"
+                                            placeholder="Buscar estudiante..."
+                                            id="searchEstudiante"
+                                        />
+                                        <i class="bx bx-search"></i>
+                                    </div>
+                                    <div class="filters">
+                                        <select id="filterGrado">
+                                            <option value=""
+                                                >Todos los Grados</option
+                                            >
+                                            <option value="1">1er Grado</option>
+                                            <option value="2">2do Grado</option>
+                                            <option value="3">3er Grado</option>
+                                        </select>
+                                        <select id="filterSeccion">
+                                            <option value=""
+                                                >Todas las Secciones</option
+                                            >
+                                            <option value="A">Sección A</option>
+                                            <option value="B">Sección B</option>
+                                            <option value="C">Sección C</option>
+                                        </select>
+                                        <select id="filterEstado">
+                                            <option value=""
+                                                >Todos los Estados</option
+                                            >
+                                            <option value="activo"
+                                                >Activo</option
+                                            >
+                                            <option value="inactivo"
+                                                >Inactivo</option
+                                            >
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Tabla de Estudiantes -->
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Cédula</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th>Grado</th>
+                                                <th>Sección</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="estudiantesTableBody">
+                                            <!-- Los datos se cargarán dinámicamente -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Paginación -->
+                                <div class="pagination-container">
+                                    <nav aria-label="Navegación de páginas">
+                                        <ul class="pagination">
+                                            <li class="page-item disabled">
+                                                <a
+                                                    class="page-link"
+                                                    href="#"
+                                                    tabindex="-1">Anterior</a
+                                                >
+                                            </li>
+                                            <li class="page-item active">
+                                                <a class="page-link" href="#"
+                                                    >1</a
+                                                >
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#"
+                                                    >2</a
+                                                >
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#"
+                                                    >3</a
+                                                >
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#"
+                                                    >Siguiente</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Matrícula -->
+                        <div
+                            class="tab-pane fade"
+                            id="matricula"
+                            role="tabpanel"
+                            aria-labelledby="matricula-tab"
+                        >
+                            <div class="matricula-container">
+                                <MatriculaForm />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</AdminDashboard>
+
+<style>
+    .Layout-grid-area {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        gap: 1rem;
+    }
+
+    .estudiantes-dashboard {
+        padding: 2rem;
+    }
+
+    .dashboard-header {
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-header h2 {
+        color: var(--color-primary);
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-header p {
+        color: var(--color-quaternary);
+        opacity: 0.8;
+    }
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: var(--border-radius-12);
+        box-shadow: var(--box-shadow-card);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .stat-card i {
+        font-size: 2.5rem;
+        color: var(--color-primary);
+    }
+
+    .stat-info h3 {
+        font-size: 1rem;
+        color: var(--color-quaternary);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-info span {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--color-primary);
+    }
+
+    .nav-tabs-container {
+        background: white;
+        border-radius: var(--border-radius-12);
+        padding: 1.5rem;
+        box-shadow: var(--box-shadow-card);
+    }
+
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .search-box {
+        position: relative;
+        flex: 1;
+        max-width: 300px;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-8);
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-quaternary);
+    }
+
+    .filters {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .filters select {
+        padding: 0.75rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-8);
+        color: var(--color-quaternary);
+    }
+
+    @media (max-width: 768px) {
+        .Layout-grid-area {
+            grid-template-columns: 1fr;
+        }
+
+        .toolbar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .search-box {
+            max-width: 100%;
+        }
+
+        .filters {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+    // Aquí irá la lógica de JavaScript para manejar la interactividad
+    document.addEventListener("DOMContentLoaded", function () {
+        // Código para cargar los datos de estudiantes
+        // y manejar la interactividad de la interfaz
+    });
+</script>

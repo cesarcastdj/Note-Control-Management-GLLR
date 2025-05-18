@@ -1,0 +1,442 @@
+---
+import "../../style/style-admin/Matricula.css";
+---
+
+<div class="matricula-form-container">
+    <form id="matriculaForm" novalidate>
+        <!-- 🔹 Información Personal -->
+        <div class="mb-3">
+            <label for="cedula" class="form-label"
+                >Cédula <span class="campo-obligatorio">*</span></label
+            >
+            <input
+                type="text"
+                class="form-control"
+                id="cedula"
+                name="cedula"
+                placeholder="Ejemplo: V-12345678"
+                required
+                pattern="[VE]-\d{8}"
+            />
+            <div class="invalid-feedback">
+                Por favor ingrese una cédula válida (Formato: V-XXXXXXXX o
+                E-XXXXXXXX)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="primerNombre" class="form-label"
+                    >Primer Nombre <span class="campo-obligatorio">*</span
+                    ></label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="primerNombre"
+                    name="primerNombre"
+                    placeholder="Ingrese el primer nombre"
+                    required
+                />
+                <div class="invalid-feedback">
+                    Por favor ingrese el primer nombre
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="segundoNombre" class="form-label"
+                    >Segundo Nombre</label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="segundoNombre"
+                    name="segundoNombre"
+                    placeholder="Ingrese el segundo nombre"
+                />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="primerApellido" class="form-label"
+                    >Primer Apellido <span class="campo-obligatorio">*</span
+                    ></label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="primerApellido"
+                    name="primerApellido"
+                    placeholder="Ingrese el primer apellido"
+                    required
+                />
+                <div class="invalid-feedback">
+                    Por favor ingrese el primer apellido
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="segundoApellido" class="form-label"
+                    >Segundo Apellido</label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="segundoApellido"
+                    name="segundoApellido"
+                    placeholder="Ingrese el segundo apellido"
+                />
+            </div>
+        </div>
+
+        <!-- 🔹 Información Académica -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="grado" class="form-label"
+                    >Grado <span class="campo-obligatorio">*</span></label
+                >
+                <select class="form-select" id="grado" name="grado" required>
+                    <option value="" selected disabled
+                        >Seleccione el grado</option
+                    >
+                    <option value="1">1er Grado</option>
+                    <option value="2">2do Grado</option>
+                    <option value="3">3er Grado</option>
+                    <option value="4">4to Grado</option>
+                    <option value="5">5to Grado</option>
+                    <option value="6">6to Grado</option>
+                </select>
+                <div class="invalid-feedback">
+                    Por favor seleccione el grado
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="seccion" class="form-label"
+                    >Sección <span class="campo-obligatorio">*</span></label
+                >
+                <select
+                    class="form-select"
+                    id="seccion"
+                    name="seccion"
+                    required
+                >
+                    <option value="" selected disabled
+                        >Seleccione la sección</option
+                    >
+                    <option value="A">Sección A</option>
+                    <option value="B">Sección B</option>
+                    <option value="C">Sección C</option>
+                </select>
+                <div class="invalid-feedback">
+                    Por favor seleccione la sección
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 Información de Contacto -->
+        <div class="mb-3">
+            <label for="correo" class="form-label"
+                >Correo Electrónico <span class="campo-obligatorio">*</span
+                ></label
+            >
+            <input
+                type="email"
+                class="form-control"
+                id="correo"
+                name="correo"
+                placeholder="ejemplo@correo.com"
+                required
+            />
+            <div class="invalid-feedback">
+                Por favor ingrese un correo electrónico válido
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="telefono" class="form-label"
+                >Teléfono <span class="campo-obligatorio">*</span></label
+            >
+            <input
+                type="tel"
+                class="form-control"
+                id="telefono"
+                name="telefono"
+                placeholder="Ejemplo: 0414-1234567"
+                required
+                pattern="[0-9]{4}-[0-9]{7}"
+            />
+            <div class="invalid-feedback">
+                Por favor ingrese un número de teléfono válido (Formato:
+                0414-1234567)
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="direccion" class="form-label"
+                >Dirección <span class="campo-obligatorio">*</span></label
+            >
+            <textarea
+                class="form-control"
+                id="direccion"
+                name="direccion"
+                rows="3"
+                placeholder="Ingrese la dirección completa"
+                required></textarea>
+            <div class="invalid-feedback">Por favor ingrese la dirección</div>
+        </div>
+
+        <!-- 🔹 Información del Representante -->
+        <div class="representante-info">
+            <h4>Información del Representante</h4>
+
+            <div class="mb-3">
+                <label for="representanteCedula" class="form-label"
+                    >Cédula del Representante <span class="campo-obligatorio"
+                        >*</span
+                    ></label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="representanteCedula"
+                    name="representanteCedula"
+                    placeholder="Ejemplo: V-12345678"
+                    required
+                    pattern="[VE]-\d{8}"
+                />
+                <div class="invalid-feedback">
+                    Por favor ingrese una cédula válida (Formato: V-XXXXXXXX o
+                    E-XXXXXXXX)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="representanteNombre" class="form-label"
+                        >Nombre del Representante <span
+                            class="campo-obligatorio">*</span
+                        ></label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="representanteNombre"
+                        name="representanteNombre"
+                        placeholder="Nombre completo del representante"
+                        required
+                    />
+                    <div class="invalid-feedback">
+                        Por favor ingrese el nombre del representante
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="parentesco" class="form-label"
+                        >Parentesco <span class="campo-obligatorio">*</span
+                        ></label
+                    >
+                    <select
+                        class="form-select"
+                        id="parentesco"
+                        name="parentesco"
+                        required
+                    >
+                        <option value="" selected disabled
+                            >Seleccione el parentesco</option
+                        >
+                        <option value="madre">Madre</option>
+                        <option value="padre">Padre</option>
+                        <option value="abuelo">Abuelo/a</option>
+                        <option value="tio">Tío/a</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Por favor seleccione el parentesco
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="representanteTelefono" class="form-label"
+                    >Teléfono del Representante <span class="campo-obligatorio"
+                        >*</span
+                    ></label
+                >
+                <input
+                    type="tel"
+                    class="form-control"
+                    id="representanteTelefono"
+                    name="representanteTelefono"
+                    placeholder="Ejemplo: 0414-1234567"
+                    required
+                    pattern="[0-9]{4}-[0-9]{7}"
+                />
+                <div class="invalid-feedback">
+                    Por favor ingrese un número de teléfono válido (Formato:
+                    0414-1234567)
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 Botones de acción -->
+        <div class="d-flex justify-content-between mt-4">
+            <button type="reset" class="btn btn-secondary">
+                <i class="bx bx-reset"></i> Limpiar
+            </button>
+            <button type="submit" class="btn btn-primary">
+                <i class="bx bx-save"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById(
+            "matriculaForm",
+        ) as HTMLFormElement;
+        const cedulaInput = document.getElementById(
+            "cedula",
+        ) as HTMLInputElement;
+        const representanteCedulaInput = document.getElementById(
+            "representanteCedula",
+        ) as HTMLInputElement;
+        const telefonoInput = document.getElementById(
+            "telefono",
+        ) as HTMLInputElement;
+        const representanteTelefonoInput = document.getElementById(
+            "representanteTelefono",
+        ) as HTMLInputElement;
+
+        if (
+            !form ||
+            !cedulaInput ||
+            !representanteCedulaInput ||
+            !telefonoInput ||
+            !representanteTelefonoInput
+        ) {
+            console.error("No se encontraron los elementos del formulario");
+            return;
+        }
+
+        // Función para validar el formato de la cédula
+        function validarCedula(cedula: string): boolean {
+            const cedulaRegex = /^[VE]-\d{8}$/;
+            return cedulaRegex.test(cedula);
+        }
+
+        // Función para validar el formato del teléfono
+        function validarTelefono(telefono: string): boolean {
+            const telefonoRegex = /^[0-9]{4}-[0-9]{7}$/;
+            return telefonoRegex.test(telefono);
+        }
+
+        // Validar cédula en tiempo real
+        [cedulaInput, representanteCedulaInput].forEach((input) => {
+            input.addEventListener("input", function () {
+                const cedula = this.value.trim().toUpperCase();
+                this.value = cedula;
+
+                if (!validarCedula(cedula)) {
+                    this.classList.add("is-invalid");
+                    this.classList.remove("is-valid");
+                } else {
+                    this.classList.add("is-valid");
+                    this.classList.remove("is-invalid");
+                }
+            });
+        });
+
+        // Validar teléfono en tiempo real
+        [telefonoInput, representanteTelefonoInput].forEach((input) => {
+            input.addEventListener("input", function () {
+                const telefono = this.value.trim();
+
+                if (!validarTelefono(telefono)) {
+                    this.classList.add("is-invalid");
+                    this.classList.remove("is-valid");
+                } else {
+                    this.classList.add("is-valid");
+                    this.classList.remove("is-invalid");
+                }
+            });
+        });
+
+        // Validar el formulario antes de enviar
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add("was-validated");
+                return;
+            }
+
+            // Si la validación es exitosa, continuar con el envío del formulario
+            console.log("Formulario válido, procesando datos...");
+            // Aquí iría el código para enviar los datos al servidor
+        });
+    });
+</script>
+
+<style>
+    .representante-info {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid var(--color-border);
+    }
+
+    .representante-info h4 {
+        color: var(--color-primary);
+        margin-bottom: 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--border-radius-8);
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn i {
+        font-size: 1.25rem;
+    }
+
+    .btn-primary {
+        background: var(--color-primary);
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: var(--color-secondary);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: var(--color-border);
+        color: var(--color-quaternary);
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background: var(--color-quaternary);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .d-flex {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+</style>
+

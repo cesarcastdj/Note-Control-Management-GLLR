@@ -90,14 +90,14 @@
     cursor: pointer;
 }
 
-.bar-home-content .list-bar li > a {
-    display: flex; 
+.bar-home-content .list-bar li>a {
+    display: flex;
     align-items: center;
     padding: var(--spacing-8) var(--spacing-16);
     width: 100%;
 }
 
-.bar-home-content .list-bar li a > i {
+.bar-home-content .list-bar li a>i {
     margin-right: var(--spacing-12);
     font-size: 1.3rem;
 }
@@ -159,7 +159,7 @@
 }
 
 .list-bar .list-item .sublist .sublist-item a {
-    display: flex; 
+    display: flex;
     align-items: center;
     padding: var(--spacing-8) var(--spacing-16);
     width: 100%;
