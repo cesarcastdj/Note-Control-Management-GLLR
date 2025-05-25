@@ -10,7 +10,8 @@
     "rootDir": "./src/ts",
     "outDir": "./src/js",
     "baseUrl": "./src",
-    "noEmit": false,
+    "noEmit": true,
+    "allowImportingTsExtensions": true, // Agregado para permitir importar extensiones TS
     "paths": {
       "@components/*": ["src/components/*"],
       "@types/*": ["src/Types/*"]

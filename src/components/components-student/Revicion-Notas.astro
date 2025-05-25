@@ -1,177 +1,25 @@
 ---
 import "../../style/students/student-notas.css";
 import "../../style/style-admin/data-table.css";
+import jsPDF from "jspdf";
 ---
 
 <section class="data-content-section">
   <!-- Sección de búsqueda -->
   <section class="search-content-data">
     <div class="welcome-search-data">
-      <h2 class="welcome-search-data__title">Te damos la bienvenida a GLLR</h2>
-      <!-- <p class="welcome-search-data__text">
-        Aquí puedes gestionar los datos de tu aplicación de manera eficiente y
-        rápida.
-      </p> -->
+      <h2 class="welcome-search-data__title">
+        <strong>Cesar Castañeda</strong> Te damos la bienvenida a GLLR
+      </h2>
+      <p class="welcome-search-data__text">
+        Soy un sistema de gestión de notas y actividades. Aquí podrás ver tus
+        notas.
+      </p>
     </div>
   </section>
 
   <!-- Sección de tablas -->
   <section class="content-info-data">
-    <!-- Primera tabla -->
-    <section class="display-table">
-      <div class="collapse" id="table1">
-        <div class="tabla-info-person">
-          <table class="blueTable">
-            <thead>
-              <tr>
-                <th scope="col">Nº</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">C.I.</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Periodo Académico</th>
-                <th scope="col">Conexiones</th>
-                <th scope="col">Última Conexión</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Juan</td>
-                <td>Linares</td>
-                <td>123455678</td>
-                <td>Activo</td>
-                <td>2020 | 2025</td>
-                <td>15</td>
-                <td>15/04/2025</td>
-                <td class="menu-container">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                  <ul class="submenu">
-                    <li>
-                      <a href="#"><i class="bx bx-edit-alt"></i>Editar</a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="bx bx-trash"></i>Eliminar</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="bx bxs-user-detail"></i>Ver Detalles</a
-                      >
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>María</td>
-                <td>Gómez</td>
-                <td>987654321</td>
-                <td>Inactivo</td>
-                <td>2019 | 2024</td>
-                <td>10</td>
-                <td>14/04/2025</td>
-                <td class="menu-container">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                  <ul class="submenu">
-                    <li>
-                      <a href="#"><i class="bx bx-edit-alt"></i>Editar</a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="bx bx-trash"></i>Eliminar</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="bx bxs-user-detail"></i>Ver Detalles</a
-                      >
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>María</td>
-                <td>Gómez</td>
-                <td>987654321</td>
-                <td>Inactivo</td>
-                <td>2019 | 2024</td>
-                <td>10</td>
-                <td>14/04/2025</td>
-                <td class="menu-container">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                  <ul class="submenu">
-                    <li>
-                      <a href="#"><i class="bx bx-edit-alt"></i>Editar</a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="bx bx-trash"></i>Eliminar</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="bx bxs-user-detail"></i>Ver Detalles</a
-                      >
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>María</td>
-                <td>Gómez</td>
-                <td>987654321</td>
-                <td>Inactivo</td>
-                <td>2019 | 2024</td>
-                <td>10</td>
-                <td>14/04/2025</td>
-                <td class="menu-container">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                  <ul class="submenu">
-                    <li>
-                      <a href="#"><i class="bx bx-edit-alt"></i>Editar</a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="bx bx-trash"></i>Eliminar</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="bx bxs-user-detail"></i>Ver Detalles</a
-                      >
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>María</td>
-                <td>Gómez</td>
-                <td>987654321</td>
-                <td>Inactivo</td>
-                <td>2019 | 2024</td>
-                <td>10</td>
-                <td>14/04/2025</td>
-                <td class="menu-container">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                  <ul class="submenu">
-                    <li>
-                      <a href="#"><i class="bx bx-edit-alt"></i>Editar</a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="bx bx-trash"></i>Eliminar</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="bx bxs-user-detail"></i>Ver Detalles</a
-                      >
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
     <!-- Segunda tabla -->
     <section class="display-table">
       <div class="content-table1">
@@ -283,13 +131,219 @@ import "../../style/style-admin/data-table.css";
         </div>
       </div>
       <div class="student-actions">
-        <button class="btn btn-primary" id="descargarNotas">
+        <button class="btn btn-descarga" id="descargarNotas">
           <i class="bx bxs-file-pdf"></i> Descargar Boletín
         </button>
-        <button class="btn btn-secondary" id="mensajeProfesor">
+        <button
+          class="btn btn-mensaje"
+          id="mensajeProfesor"
+          data-bs-toggle="modal"
+          data-bs-target="#modalMensajeProfesor"
+        >
           <i class="bx bx-message"></i> Enviar Mensaje
         </button>
+
+        <!-- Modal para enviar mensaje al profesor -->
+        <div
+          class="modal fade"
+          id="modalMensajeProfesor"
+          tabindex="-1"
+          aria-labelledby="modalMensajeProfesorLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalMensajeProfesorLabel">
+                  Enviar mensaje al profesor
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Cerrar"></button>
+              </div>
+              <form>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="profesorSelect" class="form-label"
+                      >Selecciona el profesor</label
+                    >
+                    <select class="form-control" id="profesorSelect" required>
+                      <option value="" disabled selected
+                        >Elige un profesor</option
+                      >
+                      <option value="prof1">Prof. Juan Pérez</option>
+                      <option value="prof2">Prof. María Gómez</option>
+                      <option value="prof3">Prof. Pedro Ramírez</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="mensajeTexto" class="form-label">Mensaje</label>
+                    <textarea
+                      class="form-control"
+                      id="mensajeTexto"
+                      rows="4"
+                      placeholder="Escribe tu mensaje aquí..."></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancelar
+                  </button>
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="toastContainer" class="position-fixed top-0 end-0 p-3">
+          <!-- Toasts se agregarán aquí dinámicamente -->
+        </div>
+
+        <script type="text/javascript">
+          // Ajustar las notificaciones para que aparezcan desde la parte inferior y con íconos alineados al texto
+          if (typeof window !== "undefined") {
+            document.addEventListener("DOMContentLoaded", function () {
+              console.log("El DOM está completamente cargado y listo.");
+
+              const btnDescargar = document.getElementById("descargarNotas");
+
+              if (btnDescargar) {
+                console.log("Botón 'Descargar Boletín' encontrado.");
+
+                btnDescargar.addEventListener("click", function () {
+                  console.log("Se hizo clic en el botón 'Descargar Boletín'.");
+
+                  try {
+                    const doc = new jsPDF();
+
+                    console.log("jsPDF cargado exitosamente.");
+
+                    // Configuración de estilos
+                    const titleFontSize = 18;
+                    const contentFontSize = 12;
+                    const lineHeight = 10;
+                    const margin = 10;
+
+                    // Título del PDF
+                    doc.setFontSize(titleFontSize);
+                    doc.setFont("helvetica", "bold");
+                    doc.text("Reporte de Notas del Estudiante", margin, margin);
+
+                    // Línea divisoria
+                    doc.setDrawColor(0, 0, 0);
+                    doc.setLineWidth(0.5);
+                    doc.line(margin, margin + 5, 200, margin + 5);
+
+                    // Contenido del PDF
+                    doc.setFontSize(contentFontSize);
+                    doc.setFont("helvetica", "normal");
+                    let yPosition = margin + 15;
+
+                    doc.text("Nombre: Pedro", margin, yPosition);
+                    yPosition += lineHeight;
+                    doc.text("C.I: 654987321", margin, yPosition);
+                    yPosition += lineHeight;
+                    doc.text("Notas:", margin, yPosition);
+                    yPosition += lineHeight;
+
+                    doc.text("- Evaluación 01: 20", margin + 5, yPosition);
+                    yPosition += lineHeight;
+                    doc.text("- Evaluación 02: 20", margin + 5, yPosition);
+                    yPosition += lineHeight;
+                    doc.text("- Evaluación 03: 20", margin + 5, yPosition);
+                    yPosition += lineHeight;
+                    doc.text("- Evaluación 04: 20", margin + 5, yPosition);
+                    yPosition += lineHeight;
+                    doc.text("- Evaluación 05: 20", margin + 5, yPosition);
+                    yPosition += lineHeight;
+
+                    doc.text("Total Puntos: 100", margin, yPosition);
+
+                    // Pie de página
+                    doc.setFontSize(10);
+                    doc.setFont("helvetica", "italic");
+                    doc.text("Generado por el sistema GLLR", margin, 290);
+
+                    // Abrir el PDF en una nueva pestaña
+                    const pdfBlob = doc.output("blob");
+                    const pdfUrl = URL.createObjectURL(pdfBlob);
+                    window.open(pdfUrl, "_blank");
+
+                    // Mostrar notificación de éxito
+                    mostrarToast(
+                      "PDF generado exitosamente.",
+                      "success",
+                      "bx bxs-check-circle"
+                    );
+                  } catch (error) {
+                    console.error("Error al generar el PDF:", error);
+                    mostrarToast(
+                      `Hubo un problema al generar el PDF: ${error.message}`,
+                      "danger",
+                      "bx bxs-error"
+                    );
+                  }
+                });
+              } else {
+                console.warn(
+                  "Botón 'Descargar Boletín' no encontrado en el DOM."
+                );
+              }
+            });
+
+            // Evitar duplicados de notificaciones
+            function mostrarToast(mensaje, tipo, icono) {
+              const toastContainer = document.getElementById("toastContainer");
+
+              // Verificar si ya existe una notificación con el mismo mensaje
+              const existingToast = Array.from(toastContainer.children).find(
+                (toast) => toast.textContent.includes(mensaje)
+              );
+
+              if (existingToast) {
+                return; // No crear una nueva notificación si ya existe una igual
+              }
+
+              const toast = document.createElement("div");
+              toast.className = `toast align-items-center text-bg-${tipo} border-0 mb-2`;
+              toast.role = "alert";
+              toast.ariaLive = "assertive";
+              toast.ariaAtomic = "true";
+
+              toast.innerHTML = `
+                <div class="d-flex align-items-center">
+                  <i class="${icono} me-3 fs-4"></i>
+                  <div class="toast-body">
+                    ${mensaje}
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+              `;
+
+              toastContainer.appendChild(toast);
+
+              const bootstrapToast = new bootstrap.Toast(toast);
+              bootstrapToast.show();
+
+              // Eliminar el toast después de que se oculta
+              toast.addEventListener("hidden.bs.toast", () => {
+                toast.remove();
+              });
+            }
+          }
+        </script>
       </div>
     </section>
   </section>
 </section>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+></script>
