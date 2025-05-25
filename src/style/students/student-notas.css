@@ -1,0 +1,6 @@
+@import '../variables.css';
+@import '../global.css';
+
+body {
+    background-color: var(--theme-dark);
+}
