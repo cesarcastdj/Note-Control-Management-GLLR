@@ -4,3 +4,14 @@
 body {
     background-color: var(--theme-dark);
 }
+
+.data-content-section {
+    height: calc(100vh - 2rem);
+    margin: 0 24px;
+    overflow: hidden;
+}
+
+.student-actions {
+    display: block;
+    margin: auto;
+}
