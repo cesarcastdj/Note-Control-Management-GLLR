@@ -1,8 +1,18 @@
 ---
-
+// Layout para el panel de estudiantes
+const { title } = Astro.props;
 ---
 
-<div>
-  <h1>Panel de Estudiantes</h1>
-  <p>Bienvenido al panel de estudiantes.</p>
-</div>
+<main class="student-dashboard-layout">
+  <slot />
+</main>
+
+<style>
+  .student-dashboard-layout {
+    min-height: 100vh;
+    background: var(--color-tertiary, #f8fafc);
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+  }
+</style>
