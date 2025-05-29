@@ -1,45 +1,57 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { config } from '../config/config';
 
-interface JwtPayload {
-    id: number;
-    role: string;
+interface TokenPayload {
+  id: number;
+  role: string;
 }
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const token = req.headers.authorization?.split(' ')[1];
-
-        if (!token) {
-            return res.status(401).json({
-                message: 'No se proporcionó token de autenticación'
-            });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'somesecrettoken') as JwtPayload;
-        req.user = decoded;
-        next();
-    } catch (error) {
-        return res.status(401).json({
-            message: 'Token inválido'
-        });
+declare global {
+  namespace Express {
+    interface Request {
+      user?: TokenPayload;
     }
+  }
+}
+
+export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+
+    if (!token) {
+      res.status(401).json({
+        message: 'No hay token de autenticación'
+      });
+      return;
+    }
+
+    const decoded = jwt.verify(token, config.jwtSecret) as TokenPayload;
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(401).json({
+      message: 'Token inválido'
+    });
+  }
 };
 
-export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-    if (req.user?.role !== 'admin') {
-        return res.status(403).json({
-            message: 'Acceso denegado: se requiere rol de administrador'
-        });
-    }
-    next();
+export const adminMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  if (req.user?.role !== 'admin') {
+    res.status(403).json({
+      message: 'Acceso denegado. Se requieren privilegios de administrador'
+    });
+    return;
+  }
+  next();
 };
 
-export const isStudent = (req: Request, res: Response, next: NextFunction) => {
-    if (req.user?.role !== 'student') {
-        return res.status(403).json({
-            message: 'Acceso denegado: se requiere rol de estudiante'
-        });
-    }
-    next();
-}; 
+export const studentMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  if (req.user?.role !== 'estudiante') {
+    res.status(403).json({
+      message: 'Acceso denegado. Se requieren privilegios de estudiante'
+    });
+    return;
+  }
+  next();
+};

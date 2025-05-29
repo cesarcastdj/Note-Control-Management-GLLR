@@ -1,6 +1,6 @@
 ---
 // Sidebar.astro
-import "../style/sidebar.css";
+import "../style/Sidebar.css";
 
 // Obtenemos la ruta actual desde Astro
 const currentPath: string = Astro.url.pathname;
@@ -20,64 +20,81 @@ const sidebarMenu: MenuItem[] = [
     href: "/Admin-Control/Admin-home",
   },
   {
-    label: "Matrícula",
-    icon: "bx bx-pie-chart-alt-2",
+    label: "Estudiantes",
+    icon: "bx bxs-user-detail",
     href: "#",
     subitems: [
       {
-        label: "Registro",
-        icon: "bx bxs-folder",
-        href: "/Admin-Control/Matricula",
+        label: "Lista de Estudiantes",
+        icon: "bx bxs-user-list",
+        href: "/Admin-Control/Students-Control",
       },
       {
-        label: "Descargar Matrícula",
-        icon: "bx bxs-folder",
-        href: "#",
+        label: "Matrícula",
+        icon: "bx bxs-file-plus",
+        href: "/Admin-Control/Students-Control",
       },
     ],
   },
   {
     label: "Cursos",
-    icon: "bx bxl-medium",
+    icon: "bx bxs-book",
     href: "#",
     subitems: [
       {
-        label: "Materias",
-        icon: "bx bxs-folder",
-        href: "/materias/actividad",
+        label: "Lista de Materias",
+        icon: "bx bxs-book-content",
+        href: "/materias/lista",
       },
       {
-        label: "Actividades",
-        icon: "bx bxs-folder",
-        href: "/materias/actividad",
+        label: "Asignación",
+        icon: "bx bxs-user-check",
+        href: "/materias/asignacion",
       },
     ],
   },
   {
     label: "Notas",
     icon: "bx bxs-calculator",
-    href: "#", //  no tiene URL válida
+    href: "#",
     subitems: [
       {
-        label: "Ponderación",
-        icon: "bx bxs-folder",
-        href: "/ponderacion/notas",
+        label: "Registro de Notas",
+        icon: "bx bxs-edit",
+        href: "/notas/registro",
       },
       {
-        label: "Descargar Notas",
-        icon: "bx bxs-folder",
-        href: "/ponderacion/notas",
+        label: "Boletín",
+        icon: "bx bxs-report",
+        href: "/notas/boletin",
+      },
+      {
+        label: "Reportes",
+        icon: "bx bxs-file-pdf",
+        href: "/notas/reportes",
       },
     ],
   },
   {
-    label: "Papelera",
-    icon: "bx bx-trash",
-    href: "/papelera",
+    label: "Configuración",
+    icon: "bx bxs-cog",
+    href: "#",
+    subitems: [
+      {
+        label: "Períodos",
+        icon: "bx bxs-calendar",
+        href: "/config/periodos",
+      },
+      {
+        label: "Respaldo",
+        icon: "bx bxs-data",
+        href: "/config/backup",
+      },
+    ],
   },
 ];
 
-// Función simple para determinar si un enlace debe estar "activo"
+// Función para determinar si un enlace está activo
 function isActive(link: string): boolean {
   return currentPath === link;
 }
@@ -87,22 +104,17 @@ function isActive(link: string): boolean {
   <div class="section-bar-area-content">
     <div class="section-bar-menu">
       <div class="btn-buttuon-agreagar">
-        <button>
-          <i class="bx bxs-user-plus"></i>Nuevo
+        <button
+          onclick="window.location.href='/Admin-Control/Students-Control'"
+        >
+          <i class="bx bxs-user-plus"></i>Matrícula
         </button>
       </div>
 
       <div class="list-bar">
         <ul>
           {
-            /*
-            Renderizamos los tres primeros elementos en la primera lista.
-            Se aplica la clase "active" si el href coincide con currentPath o si
-            alguno de sus subitems es activo.
-          */
-          }
-          {
-            sidebarMenu.slice(0, 3).map((item) => {
+            sidebarMenu.map((item) => {
               const itemActive =
                 isActive(item.href) ||
                 (item.subitems &&
@@ -123,50 +135,9 @@ function isActive(link: string): boolean {
                     <ul class="sublist">
                       {item.subitems.map((sub) => (
                         <li
-                          class={`sublist-item ${isActive(sub.href) ? "active" : ""}`}
-                        >
-                          <a href={sub.href} tabindex="0">
-                            <i class={sub.icon} />
-                            <span>{sub.label}</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              );
-            })
-          }
-        </ul>
-        <ul>
-          {
-            /*
-            Renderizamos los elementos restantes en la segunda lista.
-          */
-          }
-          {
-            sidebarMenu.slice(3).map((item) => {
-              const itemActive =
-                isActive(item.href) ||
-                (item.subitems &&
-                  item.subitems.some((sub) => isActive(sub.href)));
-              return (
-                <li
-                  class={
-                    item.subitems
-                      ? `list-item list-item__sub ${itemActive ? "active" : ""}`
-                      : `list-item ${itemActive ? "active" : ""}`
-                  }
-                >
-                  <a href={item.href}>
-                    <i class={item.icon} />
-                    <span>{item.label}</span>
-                  </a>
-                  {item.subitems && (
-                    <ul class="sublist">
-                      {item.subitems.map((sub) => (
-                        <li
-                          class={`sublist-item ${isActive(sub.href) ? "active" : ""}`}
+                          class={`sublist-item ${
+                            isActive(sub.href) ? "active" : ""
+                          }`}
                         >
                           <a href={sub.href} tabindex="0">
                             <i class={sub.icon} />
@@ -188,3 +159,61 @@ function isActive(link: string): boolean {
     Minimizar<i class="bx bx-left-arrow-circle"></i>
   </button>
 </section>
+
+<style>
+  .action-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  .action-button:hover {
+    background: var(--primary-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .action-button i {
+    font-size: 1.25rem;
+  }
+
+  .btn-buttuon-agreagar {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+</style>
+
+<script>
+  const quickActionsBtn = document.getElementById("quickActionsBtn");
+  const quickActionsMenu = document.getElementById("quickActionsMenu");
+
+  if (quickActionsBtn && quickActionsMenu) {
+    quickActionsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      quickActionsMenu.classList.toggle("show");
+    });
+
+    // Cerrar el menú cuando se hace clic fuera de él
+    document.addEventListener("click", (e) => {
+      const target = e.target as Node;
+      if (quickActionsBtn && !quickActionsBtn.contains(target)) {
+        quickActionsMenu.classList.remove("show");
+      }
+    });
+
+    // Prevenir que el menú se cierre al hacer clic dentro de él
+    quickActionsMenu.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  }
+</script>

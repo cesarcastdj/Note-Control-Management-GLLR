@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.user.role === 'admin') {
                     window.location.href = '/Admin-Control/Admin-home';
                 } else if (data.user.role === 'student') {
-                    window.location.href = '/Student-Control/Student-home';
+                    window.location.href = '/Students/Notas-Students';
                 }
             } else {
                 showError(data.message || 'Usuario o contraseña incorrectos');
@@ -99,4 +99,4 @@ document.addEventListener('DOMContentLoaded', () => {
             showError('Error al conectar con el servidor');
         }
     });
-}); 
+});

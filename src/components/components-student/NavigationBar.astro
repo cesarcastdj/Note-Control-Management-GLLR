@@ -1,0 +1,318 @@
+---
+import "../../style/NavigationBar.css";
+---
+
+<nav class="bar-search">
+  <div class="bar-content">
+    <div class="bar-search__logo">
+      <img src="/public/SVG/Logo-1.svg" />
+    </div>
+
+    <div class="icons-nav">
+      <!-- botones solo iconos de navegacion -->
+      <div class="icons-content">
+        <div class="notification-container">
+          <button
+            class="bar-icons btn-icon"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNotifications"
+            aria-controls="offcanvasNotifications"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-bell"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path
+                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"
+              ></path>
+              <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+            </svg>
+            <span class="notification"></span>
+          </button>
+
+          <!-- Offcanvas para notificaciones -->
+          <div
+            class="offcanvas offcanvas-start"
+            data-bs-scroll="true"
+            data-bs-backdrop="false"
+            tabindex="-1"
+            id="offcanvasNotifications"
+            aria-labelledby="offcanvasNotificationsLabel"
+          >
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNotificationsLabel">
+                Notificaciones
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"><i class="bx bx-chevrons-left"></i></button
+              >
+            </div>
+
+            <div class="noticatacion-card">
+              <div class="offcanvas-body">
+                <div class="notification-content">
+                  <i class="bx bx-user-circle"></i>
+                </div>
+                <div class="notification-text">
+                  <h6 class="name-user-notifi">
+                    Juan Pérez <span>C.I: 12345678</span>
+                  </h6>
+                  <p class="message-user-notifi">
+                    Profe: ¿está seguro que mi nota en ciencias es 0,5?
+                  </p>
+                </div>
+              </div>
+              <div class="offcanvas-body">
+                <div class="notification-content">
+                  <i class="bx bx-user-circle"></i>
+                </div>
+                <div class="notification-text">
+                  <h6 class="name-user-notifi">
+                    Juan Pérez <span>C.I: 12345678</span>
+                  </h6>
+                  <p class="message-user-notifi">
+                    Profe: ¿está seguro que mi nota en ciencias es 0,5?
+                  </p>
+                </div>
+              </div>
+              <div class="offcanvas-body">
+                <div class="notification-content">
+                  <i class="bx bx-user-circle"></i>
+                </div>
+                <div class="notification-text">
+                  <h6 class="name-user-notifi">
+                    Juan Pérez <span>C.I: 12345678</span>
+                  </h6>
+                  <p class="message-user-notifi">
+                    Profe: ¿está seguro que mi nota en ciencias es 0,5?
+                  </p>
+                </div>
+              </div>
+              <div class="offcanvas-body">
+                <div class="notification-content">
+                  <i class="bx bx-user-circle"></i>
+                </div>
+                <div class="notification-text">
+                  <h6 class="name-user-notifi">
+                    Juan Pérez <span>C.I: 12345678</span>
+                  </h6>
+                  <p class="message-user-notifi">
+                    Profe: ¿está seguro que mi nota en ciencias es 0,5?
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <button class="btn-view-all">Ver todas las notificaciones</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- crear icono de perfil -->
+        <img
+          class="Perfil-icons"
+          src="https://images.pexels.com/photos/14846793/pexels-photo-14846793.jpeg?auto=compress&cs=tinysrgb&w=1200"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasWithBothOptions"
+          aria-controls="offcanvasWithBothOptions"
+        />
+
+        <div
+          class="offcanvas offcanvas-start"
+          data-bs-scroll="true"
+          tabindex="-1"
+          id="offcanvasWithBothOptions"
+          aria-labelledby="offcanvasWithBothOptionsLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
+              Perfil
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            >
+              <i class="bx bx-chevrons-left"></i>
+            </button>
+          </div>
+          <div class="offcanvas-body-profile">
+            <div class="img-perfil-contetner">
+              <img
+                class="img-perfil"
+                src="https://images.pexels.com/photos/14846793/pexels-photo-14846793.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              />
+              <i class="bx bx-pencil"></i>
+            </div>
+            <div class="info-person-perfil">
+              <h5 class="title-perfil">Cesar Castañeda</h5>
+              <p class="email-person">HolaMundo@gmail.com</p>
+              <span class="type-user">Estudiante</span>
+            </div>
+            <hr />
+            <div class="edit-close-perfil">
+              <button class="btn-edit-perfil">
+                <i class="bx bx-pencil"></i> Editar
+              </button>
+              <button class="btn-close-perfil">
+                <i class="bx bx-log-out"></i> Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="edit-profile-modal">
+  <!-- Modal para editar perfil -->
+  <div
+    class="modal fade"
+    id="editProfileModal"
+    tabindex="-1"
+    aria-labelledby="editProfileModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"></button>
+        </div>
+        <form id="editProfileForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editName"
+                placeholder="Ingresa tu nombre"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editEmail" class="form-label"
+                >Correo Electrónico</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="editEmail"
+                placeholder="Ingresa tu correo"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editPhone" class="form-label"
+                >Número de Teléfono</label
+              >
+              <input
+                type="tel"
+                class="form-control"
+                id="editPhone"
+                placeholder="Ingresa tu número de teléfono"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editProfilePicture" class="form-label"
+                >Foto de Perfil</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="editProfilePicture"
+                accept="image/*"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary"
+              >Guardar Cambios</button
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const formElement = document.getElementById("editProfileForm")!;
+
+  formElement.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const name = (document.getElementById("editName") as HTMLInputElement)
+      ?.value;
+    const email = (document.getElementById("editEmail") as HTMLInputElement)
+      ?.value;
+    const phone = (document.getElementById("editPhone") as HTMLInputElement)
+      ?.value;
+    const profilePicture = (
+      document.getElementById("editProfilePicture") as HTMLInputElement
+    )?.files?.[0];
+
+    if (!name || !email || !phone) {
+      console.error("Faltan campos obligatorios.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    if (profilePicture) {
+      formData.append("profilePicture", profilePicture);
+    }
+
+    try {
+      const response = await fetch("/api/student/update-profile", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Perfil actualizado con éxito.");
+        location.reload();
+      } else {
+        alert("Error al actualizar el perfil.");
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+      alert("Error al actualizar el perfil.");
+    }
+  });
+</script>
+
+<style>
+  .data-content-section {
+    margin-top: 5rem 0;
+    width: 50%;
+  }
+</style>

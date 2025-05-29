@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Reiniciar backend para exponer endpoint de notas",
+			"command": "cd server && npm run dev",
+			"isBackground": true,
+			"group": "build",
+			"problemMatcher": [
+				"$tsc"
+			]
+		}
+	]
+}

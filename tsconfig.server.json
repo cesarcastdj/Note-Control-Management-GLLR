@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",   
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "./server/dist",           // Directorio de salida para los archivos JS generados
+    "rootDir": "server",        // Carpeta de origen para los archivos TS
+    "resolveJsonModule": true
+  },
+  "include": ["server/**/*"]
+}

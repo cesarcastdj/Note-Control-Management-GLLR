@@ -1,39 +1,33 @@
-import { Sequelize } from 'sequelize';
-import { config } from 'dotenv';
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
 
-config();
+dotenv.config();
 
-const dbName = process.env.DB_NAME || 'gllr_db';
-const dbUser = process.env.DB_USER || 'root';
-const dbPassword = process.env.DB_PASSWORD || '';
-const dbHost = process.env.DB_HOST || 'localhost';
-const dbPort = parseInt(process.env.DB_PORT || '3306');
+// Configuración de la base de datos
+const dbConfig = {
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'sistema_escolar',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+};
 
-export const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-    host: dbHost,
-    port: dbPort,
-    dialect: 'mariadb',
-    logging: process.env.NODE_ENV === 'development' ? console.log : false,
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-    }
-});
+// Crear pool de conexiones
+const pool = mysql.createPool(dbConfig);
 
-export const connectDB = async (): Promise<void> => {
+// Función para probar la conexión
+export const testConnection = async () => {
     try {
-        await sequelize.authenticate();
-        console.log('Conexión a la base de datos establecida correctamente.');
-
-        // Sincronizar modelos con la base de datos
-        if (process.env.NODE_ENV === 'development') {
-            await sequelize.sync({ alter: true });
-            console.log('Modelos sincronizados con la base de datos.');
-        }
+        const connection = await pool.getConnection();
+        console.log('Conexión a la base de datos establecida correctamente');
+        connection.release();
+        return true;
     } catch (error) {
         console.error('Error al conectar con la base de datos:', error);
-        process.exit(1);
+        return false;
     }
-}; 
+};
+
+export default pool; 
