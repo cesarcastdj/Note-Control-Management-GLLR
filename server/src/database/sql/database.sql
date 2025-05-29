@@ -166,6 +166,34 @@ CREATE TABLE IF NOT EXISTS `lapsos` (
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
+-- Table `sistema_escolar`.`matricula`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `matricula` (
+  `id_matricula` INT NOT NULL AUTO_INCREMENT,
+  `id_estudiante` INT NOT NULL,
+  `id_grado` INT NOT NULL,
+  `id_seccion` INT NOT NULL,
+  `año_escolar` VARCHAR(10) NOT NULL,
+  `fecha_matricula` DATE NOT NULL,
+  `estado` ENUM('activo', 'inactivo', 'retirado') NOT NULL DEFAULT 'activo',
+  `observaciones` TEXT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_matricula`),
+  CONSTRAINT `fk_matricula_estudiante`
+    FOREIGN KEY (`id_estudiante`)
+    REFERENCES `estudiantes` (`id_estudiante`),
+  CONSTRAINT `fk_matricula_grado`
+    FOREIGN KEY (`id_grado`)
+    REFERENCES `grado` (`id_grado`),
+  CONSTRAINT `fk_matricula_seccion`
+    FOREIGN KEY (`id_seccion`)
+    REFERENCES `seccion` (`id_seccion`),
+  INDEX `idx_matricula_estado` (`estado` ASC),
+  INDEX `idx_matricula_año` (`año_escolar` ASC)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+-- -----------------------------------------------------
 -- Table `sistema_escolar`.`evaluaciones_lapso`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `evaluaciones_lapso` (
@@ -173,10 +201,13 @@ CREATE TABLE IF NOT EXISTS `evaluaciones_lapso` (
   `id_lapso` INT NOT NULL,
   `id_materia` INT NOT NULL,
   `nombre_evaluacion` VARCHAR(100) NOT NULL,
+  `tipo_evaluacion` ENUM('examen', 'tarea', 'proyecto', 'participacion') NOT NULL,
   `porcentaje` DECIMAL(5,2) NOT NULL,
   `fecha_evaluacion` DATE NOT NULL,
-  `tipo_evaluacion` ENUM('examen', 'tarea', 'proyecto', 'participacion') NOT NULL,
+  `descripcion` TEXT NULL,
+  `estado` ENUM('pendiente', 'realizada', 'cancelada') NOT NULL DEFAULT 'pendiente',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_evaluacion_lapso`),
   CONSTRAINT `fk_evaluacion_lapso`
     FOREIGN KEY (`id_lapso`)
@@ -184,7 +215,8 @@ CREATE TABLE IF NOT EXISTS `evaluaciones_lapso` (
   CONSTRAINT `fk_evaluacion_materia`
     FOREIGN KEY (`id_materia`)
     REFERENCES `materias` (`id_materia`),
-  INDEX `idx_evaluacion_fecha` (`fecha_evaluacion` ASC)
+  INDEX `idx_evaluacion_fecha` (`fecha_evaluacion` ASC),
+  INDEX `idx_evaluacion_estado` (`estado` ASC)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
@@ -237,25 +269,64 @@ CREATE TABLE IF NOT EXISTS `asistencia` (
 -- -----------------------------------------------------
 DELIMITER //
 
-CREATE TRIGGER before_insert_nota
-BEFORE INSERT ON notas
+-- Trigger para validar la fecha de matrícula
+CREATE TRIGGER before_insert_matricula
+BEFORE INSERT ON matricula
 FOR EACH ROW
 BEGIN
-    IF NEW.nota_obtenida < 0 OR NEW.nota_obtenida > 20 THEN
+    IF NEW.fecha_matricula > CURDATE() THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'La nota debe estar entre 0 y 20';
+        SET MESSAGE_TEXT = 'La fecha de matrícula no puede ser futura';
     END IF;
-END;//
+END//
 
-CREATE TRIGGER before_insert_porcentaje
+-- Trigger para validar el porcentaje de evaluación
+CREATE TRIGGER before_insert_evaluacion
 BEFORE INSERT ON evaluaciones_lapso
 FOR EACH ROW
 BEGIN
-    IF NEW.porcentaje <= 0 OR NEW.porcentaje > 100 THEN
+    IF NEW.porcentaje < 0 OR NEW.porcentaje > 100 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El porcentaje debe estar entre 1 y 100';
+        SET MESSAGE_TEXT = 'El porcentaje debe estar entre 0 y 100';
     END IF;
-END;//
+END//
+
+-- Trigger para validar la fecha de evaluación
+CREATE TRIGGER before_insert_evaluacion_fecha
+BEFORE INSERT ON evaluaciones_lapso
+FOR EACH ROW
+BEGIN
+    DECLARE fecha_inicio DATE;
+    DECLARE fecha_fin DATE;
+    
+    SELECT l.fecha_inicio, l.fecha_fin 
+    INTO fecha_inicio, fecha_fin
+    FROM lapsos l
+    WHERE l.id_lapso = NEW.id_lapso;
+    
+    IF NEW.fecha_evaluacion < fecha_inicio OR NEW.fecha_evaluacion > fecha_fin THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La fecha de evaluación debe estar dentro del lapso académico';
+    END IF;
+END//
+
+-- Trigger para encriptar contraseñas
+CREATE TRIGGER before_insert_usuario
+BEFORE INSERT ON usuarios
+FOR EACH ROW
+BEGIN
+    SET NEW.contraseña = SHA2(NEW.contraseña, 256);
+END//
+
+-- Trigger para actualizar contraseñas
+CREATE TRIGGER before_update_usuario
+BEFORE UPDATE ON usuarios
+FOR EACH ROW
+BEGIN
+    IF NEW.contraseña != OLD.contraseña THEN
+        SET NEW.contraseña = SHA2(NEW.contraseña, 256);
+    END IF;
+END//
 
 DELIMITER ;
 

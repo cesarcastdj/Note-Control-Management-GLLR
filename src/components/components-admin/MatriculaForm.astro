@@ -184,98 +184,6 @@ import "../../style/style-admin/Matricula.css";
             <div class="invalid-feedback">Por favor ingrese la dirección</div>
         </div>
 
-        <!-- 🔹 Información del Representante -->
-        <div class="representante-info">
-            <h4>Información del Representante</h4>
-
-            <div class="mb-3">
-                <label for="representanteCedula" class="form-label"
-                    >Cédula del Representante <span class="campo-obligatorio"
-                        >*</span
-                    ></label
-                >
-                <input
-                    type="text"
-                    class="form-control"
-                    id="representanteCedula"
-                    name="representanteCedula"
-                    placeholder="Ejemplo: V-12345678"
-                    required
-                    pattern="[VE]-\d{8}"
-                />
-                <div class="invalid-feedback">
-                    Por favor ingrese una cédula válida (Formato: V-XXXXXXXX o
-                    E-XXXXXXXX)
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="representanteNombre" class="form-label"
-                        >Nombre del Representante <span
-                            class="campo-obligatorio">*</span
-                        ></label
-                    >
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="representanteNombre"
-                        name="representanteNombre"
-                        placeholder="Nombre completo del representante"
-                        required
-                    />
-                    <div class="invalid-feedback">
-                        Por favor ingrese el nombre del representante
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="parentesco" class="form-label"
-                        >Parentesco <span class="campo-obligatorio">*</span
-                        ></label
-                    >
-                    <select
-                        class="form-select"
-                        id="parentesco"
-                        name="parentesco"
-                        required
-                    >
-                        <option value="" selected disabled
-                            >Seleccione el parentesco</option
-                        >
-                        <option value="madre">Madre</option>
-                        <option value="padre">Padre</option>
-                        <option value="abuelo">Abuelo/a</option>
-                        <option value="tio">Tío/a</option>
-                        <option value="otro">Otro</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Por favor seleccione el parentesco
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="representanteTelefono" class="form-label"
-                    >Teléfono del Representante <span class="campo-obligatorio"
-                        >*</span
-                    ></label
-                >
-                <input
-                    type="tel"
-                    class="form-control"
-                    id="representanteTelefono"
-                    name="representanteTelefono"
-                    placeholder="Ejemplo: 0414-1234567"
-                    required
-                    pattern="[0-9]{4}-[0-9]{7}"
-                />
-                <div class="invalid-feedback">
-                    Por favor ingrese un número de teléfono válido (Formato:
-                    0414-1234567)
-                </div>
-            </div>
-        </div>
-
         <!-- 🔹 Botones de acción -->
         <div class="d-flex justify-content-between mt-4">
             <button type="reset" class="btn btn-secondary">
@@ -439,4 +347,3 @@ import "../../style/style-admin/Matricula.css";
         }
     }
 </style>
-

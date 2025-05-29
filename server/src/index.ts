@@ -1,35 +1,32 @@
 import express from 'express';
 import cors from 'cors';
-import morgan from 'morgan';
-import { config } from 'dotenv';
-
-// Rutas
+import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
-import adminRoutes from './routes/admin.routes';
-import studentRoutes from './routes/student.routes';
-import gradeRoutes from './routes/grade.routes';
 
-// Configuración de variables de entorno
-config();
+// Cargar variables de entorno
+dotenv.config();
 
-// Inicialización de la aplicación
 const app = express();
 
-// Middlewares
+// Middleware
 app.use(cors());
-app.use(morgan('dev'));
 app.use(express.json());
 
 // Rutas
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/student', studentRoutes);
-app.use('/api/grade', gradeRoutes);
 
-// Puerto
-const PORT = process.env.PORT || 3000;
+// Ruta de prueba
+app.get('/', (req, res) => {
+    res.json({ message: 'API funcionando correctamente' });
+});
+
+// Manejo de errores 404
+app.use((req, res) => {
+    res.status(404).json({ message: 'Ruta no encontrada' });
+});
 
 // Iniciar servidor
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
